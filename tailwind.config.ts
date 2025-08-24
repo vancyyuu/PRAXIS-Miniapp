@@ -1,59 +1,59 @@
 // tailwind.config.js
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: 'class',
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        'praxis-bg-dark': {
-          '50': '#f7f7f7',
-          '100': '#e6e6e6',
-          '200': '#d9d9d9', // Slightly lighter for main text
-          '300': '#c2c2c2',
-          '400': '#a8a8a8',
-          '500': '#8f8f8f',
-          '600': '#767676',
-          '700': '#5d5d5d',
-          '800': '#444444',
-          '900': '#2b2b2b',
-          '950': '#1c1c1c', // A tiny bit lighter for background
-        },
         'praxis-bg-light': {
-          '50': '#171717',
-          '100': '#262626',
-          '200': '#323232',
-          '300': '#414141',
-          '400': '#525252',
-          '500': '#696969',
-          '600': '#888888',
-          '700': '#b0b0b0',
-          '800': '#d0d0d0',
-          '900': '#e7e7e7',
-          '950': '#f5f5f5',
+          950: '#f8fafc',
+          900: '#f1f5f9',
+          800: '#e2e8f0',
+          700: '#cbd5e1',
+          600: '#94a3b8',
+          500: '#64748b',
+          400: '#475569',
+          300: '#334155',
+          200: '#1e293b',
+          100: '#0f172a',
+          50: '#020617',
+        },
+        'praxis-bg-dark': {
+          950: '#111925',
+          900: '#1b2837',
+          800: '#2f3e4e',
+          700: '#415264',
+          600: '#758aa1',
+          500: '#a3b6cc',
+          400: '#e2e8f0', // Very light gray for descriptions
+          300: '#e6e9ee',
+          200: '#f0f4f9', // Very light gray for primary text
+          100: '#f6f8fb',
+          50: '#ffffff',
         },
         'praxis-blue': {
-          '50': '#eef2ff',
-          '100': '#e0e7ff',
-          '200': '#c7d2fe',
-          '300': '#a5b4fc',
-          '400': '#818cf8',
-          '500': '#6366f1',
-          '600': '#4f46e5',
-          '700': '#4338ca',
-          '800': '#3730a3',
-          '900': '#312e81',
-          '950': '#1e1b4b',
+          50: '#eef2ff',
+          100: '#e0e7ff',
+          200: '#c7d2fe',
+          300: '#a5b4fc',
+          400: '#818cf8',
+          500: '#6366f1',
+          600: '#4f46e5',
+          700: '#4338ca',
+          800: '#3730a3',
+          900: '#312e81',
+          950: '#1e1b4b',
         },
-      },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
       },
     },
   },
   plugins: [],
-}
+};
+
+export default config;

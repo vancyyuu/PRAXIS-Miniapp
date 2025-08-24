@@ -1,18 +1,17 @@
 // components/ThemeToggle.tsx
-"use client";
-
-import useTheme from '@/app/hooks/useTheme'; // <-- Update the path if needed
 import { FaSun, FaMoon } from 'react-icons/fa';
+import useTheme from '@/app/hooks/useTheme';
 
 export default function ThemeToggle() {
-  const [theme, toggleTheme] = useTheme();
+  const [isDarkMode, toggleTheme] = useTheme();
 
   return (
-    <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-praxis-blue-800 hover:text-white transition-colors duration-300">
-      {theme === 'dark' ? 
-        <FaSun className="w-5 h-5 text-praxis-bg-dark-200" /> : 
-        <FaMoon className="w-5 h-5 text-praxis-bg-light-200" />
-      }
+    <button
+      onClick={toggleTheme}
+      className="p-2 rounded-full text-praxis-blue-800 dark:text-praxis-blue-400 bg-praxis-bg-light-200 dark:bg-praxis-bg-dark-700 transition-colors duration-200"
+      aria-label="Toggle dark mode"
+    >
+      {isDarkMode ? <FaSun /> : <FaMoon />}
     </button>
   );
 }

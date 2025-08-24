@@ -3,20 +3,88 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root,
-  [data-theme="light"] {
-    --app-background: #f5f5f5; /* Praxis-BG-light 950 */
-    --app-gray: #e7e7e7; /* Praxis-BG-light 900 */
-    --app-foreground: #323232; /* Praxis-BG-light 200 */
-    --app-accent: #3730a3;
-  }
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+
+:root {
+  /* LIGHT MODE VARIABLES */
+  --praxis-bg: #ffffff;
+  --praxis-bg-secondary: #f5f5f5;
+  --praxis-bg-tertiary: #e0e0e0;
+  --praxis-text: #262626;
+  --praxis-text-muted: #a1a1aa;
+  --praxis-accent: #1e40af;
+  --praxis-accent-hover: #172a75;
 }
 
-.dark,
-[data-theme="dark"] {
-  --app-background: #171717; /* Praxis-BG-dark 950 */
-  --app-gray: #262626; /* Praxis-BG-dark 900 */
-  --app-foreground: #d0d0d0; /* Praxis-BG-dark 200 */
-  --app-accent: #3730a3;
+.dark {
+  /* DARK MODE VARIABLES */
+  --praxis-bg: #171717;
+  --praxis-bg-secondary: #262626;
+  --praxis-bg-tertiary: #3f3f46;
+  --praxis-text: #f5f5f5;
+  --praxis-text-muted: #71717a;
+  --praxis-accent: #60a5fa;
+  --praxis-accent-hover: #4a7ecf;
+}
+
+/* OCK Theme Variables (from your old theme.css) */
+.mini-app-theme {
+  --ock-font-family: "Geist", sans-serif;
+  --ock-border-radius: 0.75rem;
+  --ock-border-radius-inner: 0.5rem;
+
+  /* Text colors */
+  --ock-text-inverse: var(--praxis-bg);
+  --ock-text-foreground: var(--praxis-text);
+  --ock-text-foreground-muted: var(--praxis-text-muted);
+  --ock-text-error: #ef4444;
+  --ock-text-primary: var(--praxis-accent);
+  --ock-text-success: #22c55e;
+  --ock-text-warning: #f59e0b;
+  --ock-text-disabled: #a1a1aa;
+
+  /* Background colors */
+  --ock-bg-default: var(--praxis-bg);
+  --ock-bg-default-hover: var(--praxis-bg-secondary);
+  --ock-bg-default-active: var(--praxis-bg-tertiary);
+  --ock-bg-alternate: var(--praxis-bg-secondary);
+  --ock-bg-alternate-hover: var(--praxis-bg-tertiary);
+  --ock-bg-alternate-active: var(--praxis-bg-tertiary);
+  --ock-bg-inverse: var(--praxis-text);
+  --ock-bg-inverse-hover: #2a2a2a;
+  --ock-bg-inverse-active: #3a3a3a;
+  --ock-bg-primary: var(--praxis-accent);
+  --ock-bg-primary-hover: var(--praxis-accent-hover);
+  --ock-bg-primary-active: var(--praxis-accent);
+  --ock-bg-primary-washed: #1e3a8a;
+  --ock-bg-primary-disabled: #80a8ff;
+  --ock-bg-secondary: var(--praxis-bg-secondary);
+  --ock-bg-secondary-hover: var(--praxis-bg-tertiary);
+  --ock-bg-secondary-active: #d1d1d1;
+  --ock-bg-error: #fee2e2;
+  --ock-bg-warning: #fef3c7;
+  --ock-bg-success: #dcfce7;
+  --ock-bg-default-reverse: var(--praxis-text);
+
+  /* Icon colors */
+  --ock-icon-color-primary: var(--praxis-accent);
+  --ock-icon-color-foreground: var(--praxis-text);
+  --ock-icon-color-foreground-muted: #71717a;
+  --ock-icon-color-inverse: var(--praxis-bg);
+  --ock-icon-color-error: #ef4444;
+  --ock-icon-color-success: #22c55e;
+  --ock-icon-color-warning: #f59e0b;
+
+  /* Line colors */
+  --ock-line-primary: var(--praxis-accent);
+  --ock-line-default: var(--praxis-bg-tertiary);
+  --ock-line-heavy: #a1a1aa;
+  --ock-line-inverse: #d4d4d8;
+}
+
+body {
+  font-family: "Geist", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
