@@ -1,41 +1,47 @@
 // components/Search.tsx
-"use client";
-
 import { useState } from 'react';
+import Leaderboard from './Leaderboard';
 
 interface SearchProps {
   onSearch: (query: string) => void;
 }
 
 export default function Search({ onSearch }: SearchProps) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
 
   const handleSearch = () => {
-    // This is the function we're calling from the parent component
     onSearch(query);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 text-center">
-      <h1 className="text-2xl font-bold mb-4">Find a PRAXIS Graduate</h1>
-      <p className="text-gray-400 mb-6">
-        Search by name, ID, or wallet address to verify skills.
-      </p>
+    <div className="space-y-6">
+      <div className="flex flex-col items-center space-y-4 p-4 rounded-lg shadow-inner bg-praxis-bg-light-900 border border-praxis-bg-light-800 dark:bg-praxis-bg-dark-800 dark:border-praxis-bg-dark-700">
+        <h1 className="text-2xl font-bold text-praxis-blue-800">Find Talent</h1>
+        <p className="text-praxis-bg-light-400 dark:text-praxis-bg-dark-400 text-center">
+          Search for top talent by name or skill, verified by on-chain credentials.
+        </p>
+        <div className="flex w-full space-x-2">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearch();
+            }}
+            placeholder="Search for a praxer or skill..."
+            className="flex-1 p-3 rounded-lg bg-praxis-bg-light-800 text-praxis-bg-light-100 placeholder-praxis-bg-light-500 border border-praxis-bg-light-700 focus:outline-none focus:ring-2 focus:ring-praxis-blue-800 dark:bg-praxis-bg-dark-900 dark:text-praxis-bg-dark-100 dark:placeholder-praxis-bg-dark-500 dark:border-praxis-bg-dark-700"
+          />
+          <button
+            onClick={handleSearch}
+            className="p-3 rounded-lg bg-praxis-blue-800 text-white font-semibold hover:bg-praxis-blue-700 transition-colors"
+          >
+            Search
+          </button>
+        </div>
+      </div>
       
-      <input
-        type="text"
-        placeholder="Enter name or ID..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="w-full max-w-sm px-4 py-2 mb-4 border border-gray-600 rounded-full bg-gray-800 text-white focus:outline-none focus:border-blue-500"
-      />
+      <Leaderboard />
       
-      <button 
-        onClick={handleSearch}
-        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition-colors"
-      >
-        Search
-      </button>
     </div>
   );
 }

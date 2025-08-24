@@ -2,11 +2,11 @@
 "use client";
 
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { ActiveTabType } from '@/app/page'; // <-- New import from your main page file
+import { ActiveTabType } from '@/app/page';
 
 interface SidebarProps {
-  activeTab: ActiveTabType; // <-- Now uses the shared type
-  setActiveTab: (tab: ActiveTabType) => void; // <-- Now uses the shared type
+  activeTab: ActiveTabType;
+  setActiveTab: (tab: ActiveTabType) => void;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (isOpen: boolean) => void;
 }
@@ -14,14 +14,14 @@ interface SidebarProps {
 export default function Sidebar({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen }: SidebarProps) {
   const handleNavigation = (tab: ActiveTabType) => {
     setActiveTab(tab);
-    setIsSidebarOpen(false); // Close the sidebar after navigating
+    setIsSidebarOpen(false);
   };
 
   const menuItems: { name: string; tab: ActiveTabType }[] = [
-    { name: "Find Praxers", tab: "search" },
-    { name: "Find Jobs", tab: "jobs" },
+    { name: "Praxis", tab: "home" }, // New home tab
+    { name: "Find Talent", tab: "search" }, // Renamed from Find Praxers
+    { name: "Find Work", tab: "jobs" }, // Renamed from Find Jobs
     { name: "Get Certified", tab: "assessment" },
-    { name: "Task Tracker", tab: "tracker" },
     { name: "Wallet", tab: "wallet" },
   ];
 
@@ -37,13 +37,13 @@ export default function Sidebar({ activeTab, setActiveTab, isSidebarOpen, setIsS
 
       {/* Sidebar Content */}
       <aside 
-        className={`fixed inset-y-0 left-0 bg-gray-900 w-64 p-6 z-50 transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed inset-y-0 left-0 bg-praxis-bg-dark-900 w-64 p-6 z-50 transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-white">Praxis</h2>
+          <h2 className="text-2xl font-bold text-praxis-bg-dark-200">Praxis</h2>
           <button 
             onClick={() => setIsSidebarOpen(false)}
-            className="text-gray-400 hover:text-white text-2xl"
+            className="text-praxis-bg-dark-400 hover:text-praxis-bg-dark-200 text-2xl"
           >
             <FaTimes />
           </button>
@@ -55,7 +55,7 @@ export default function Sidebar({ activeTab, setActiveTab, isSidebarOpen, setIsS
               key={item.tab}
               onClick={() => handleNavigation(item.tab)}
               className={`text-lg font-medium py-3 px-4 rounded-lg text-left transition-colors ${
-                activeTab === item.tab ? 'bg-blue-600 text-white' : 'hover:bg-gray-800 text-gray-300'
+                activeTab === item.tab ? 'bg-praxis-blue-800 text-praxis-bg-dark-100' : 'hover:bg-praxis-bg-dark-800 text-praxis-bg-dark-300'
               }`}
             >
               {item.name}

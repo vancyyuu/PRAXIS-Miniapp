@@ -12,12 +12,12 @@ import Profile from './components/Profile';
 import JobsList from './components/JobsList';
 import SkillAssessment from './components/SkillAssessment';
 import JobDetails from './components/JobDetails';
-import TaskTracker from './components/TaskTracker';
 import WalletView from './components/WalletView';
 import Sidebar from './components/Sidebar';
-import ThemeToggle from './components/ThemeToggle'; // <-- New import
+import ThemeToggle from './components/ThemeToggle';
+import Home from './components/Home'; // <-- New import
 
-export type ActiveTabType = 'search' | 'jobs' | 'profile' | 'assessment' | 'job-details' | 'tracker' | 'wallet';
+export type ActiveTabType = 'home' | 'search' | 'jobs' | 'profile' | 'assessment' | 'job-details' | 'tracker' | 'wallet';
 
 interface Badge {
     name: string;
@@ -43,7 +43,7 @@ export default function App() {
   const { setFrameReady, isFrameReady, context } = useMiniKit();
   const [frameAdded, setFrameAdded] = useState(false);
   
-  const [activeTab, setActiveTab] = useState<ActiveTabType>('search');
+  const [activeTab, setActiveTab] = useState<ActiveTabType>('home'); // <-- Default tab is now 'home'
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -119,7 +119,7 @@ export default function App() {
   }, [setActiveTab, setProfileData]);
 
   return (
-    <div className="flex flex-col min-h-screen font-sans text-praxis-bg-dark-200 bg-praxis-bg-dark-950 dark:text-praxis-bg-light-800 dark:bg-praxis-bg-light-950">
+    <div className="flex flex-col min-h-screen font-sans bg-praxis-bg-light-950 text-praxis-bg-light-200 dark:bg-praxis-bg-dark-950 dark:text-praxis-bg-dark-200">
       <Sidebar 
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -131,7 +131,7 @@ export default function App() {
         <header className="flex justify-between items-center mb-3 h-11">
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="text-praxis-bg-dark-200 text-2xl md:hidden"
+            className="text-praxis-bg-light-200 dark:text-praxis-bg-dark-200 text-2xl"
           >
             <FaBars />
           </button>
@@ -150,20 +150,18 @@ export default function App() {
                 <WalletDropdownDisconnect />
               </WalletDropdown>
             </Wallet>
-          </div>
-          <div className="flex items-center space-x-2">
             <ThemeToggle />
             <div>{saveFrameButton}</div>
           </div>
         </header>
         
         <main className="flex-1">
+          {activeTab === 'home' && <Home />}
           {activeTab === 'search' && <Search onSearch={handleSearch} />}
           {activeTab === 'jobs' && <JobsList onJobClick={handleJobClick} userSkills={userSkills} />}
           {activeTab === 'profile' && profileData && <Profile graduateData={profileData} onBack={handleBackFromProfile} />}
           {activeTab === 'assessment' && <SkillAssessment />}
-          {activeTab === 'job-details' && selectedJob && <JobDetails job={selectedJob} onBack={handleBackFromJobDetails} />}
-          {activeTab === 'tracker' && <TaskTracker />}
+          {activeTab === 'job-details' && selectedJob && <JobDetails job={selectedJob} onBack={handleBackFromJobDetails} userSkills={userSkills} />}
           {activeTab === 'wallet' && <WalletView />}
         </main>
 

@@ -1,81 +1,66 @@
 // components/WalletView.tsx
-"use client";
-
-import { useState } from 'react';
-import { useAccount, useBalance } from 'wagmi';
+import { FaWallet, FaHistory } from 'react-icons/fa';
 
 export default function WalletView() {
-  const { address } = useAccount();
-  const { data: balanceData, isLoading } = useBalance({
-    address,
-  });
-
-  const [transactionAmount, setTransactionAmount] = useState('');
-  const [transactionStatus, setTransactionStatus] = useState<'idle' | 'sending' | 'success' | 'failed'>('idle');
-
-  // This function simulates a transaction without a real smart contract
-  const handleSendPayment = () => {
-    if (!address || !transactionAmount) {
-      alert("Please connect a wallet and enter an amount.");
-      return;
-    }
-
-    setTransactionStatus('sending');
-
-    // Simulate a network delay
-    setTimeout(() => {
-      // In a real app, this is where you would call a smart contract
-      // For the demo, we'll just show a success message
-      console.log(`Simulated payment of ${transactionAmount} ETH sent from ${address}.`);
-      setTransactionStatus('success');
-      setTransactionAmount('');
-      
-      // Reset the status after a few seconds
-      setTimeout(() => setTransactionStatus('idle'), 3000);
-    }, 1500); 
-  };
+  const accountBalance = "120.50";
+  const currency = "PRX"; // Changed from ETH to PRX
+  const transactionHistory = [
+    { type: 'Received', amount: 50, sender: 'Innovate Labs', date: 'Jul 20, 2025' },
+    { type: 'Sent', amount: 20, recipient: 'Smart Contract', date: 'Jul 15, 2025' },
+    { type: 'Received', amount: 90, sender: 'Creative Co.', date: 'Jul 10, 2025' },
+  ];
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4 text-center">Wallet & Payments</h1>
-      
-      <div className="bg-gray-800 p-6 rounded-lg mb-6">
-        <div className="flex justify-between items-center mb-4">
-          <p className="text-lg font-semibold text-gray-400">Connected Address:</p>
-          <span className="text-white break-all">{address ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}` : 'Not Connected'}</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <p className="text-lg font-semibold text-gray-400">Your Balance:</p>
-          <span className="text-white">
-            {isLoading ? "Loading..." : `${parseFloat(balanceData?.formatted || "0").toFixed(4)} ${balanceData?.symbol}`}
-          </span>
-        </div>
+    <div className="space-y-6">
+      <div className="text-center p-4 rounded-lg bg-praxis-bg-light-900 border border-praxis-bg-light-800 dark:bg-praxis-bg-dark-800 dark:border-praxis-bg-dark-700">
+        <h1 className="text-2xl font-bold text-praxis-blue-800">Wallet</h1>
+        <p className="text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">
+          Manage your funds and track secure, milestone-based payments.
+        </p>
       </div>
 
-      <div className="bg-gray-800 p-6 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4 text-blue-400">Send a Payment</h2>
-        <input
-          type="number"
-          step="0.01"
-          placeholder="Amount (ETH)"
-          value={transactionAmount}
-          onChange={(e) => setTransactionAmount(e.target.value)}
-          className="w-full px-4 py-2 mb-4 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-        />
-        
-        <button
-          onClick={handleSendPayment}
-          disabled={!address || transactionStatus === 'sending'}
-          className={`w-full font-bold py-3 px-6 rounded-full transition-colors ${
-            transactionStatus === 'sending' ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700 text-white'
-          }`}
-        >
-          {transactionStatus === 'sending' ? 'Sending...' : 'Send Payment'}
-        </button>
+      {/* Wallet Balance Card */}
+      <div className="p-6 rounded-lg bg-praxis-bg-light-900 dark:bg-praxis-bg-dark-800 shadow-lg border border-praxis-bg-light-800 dark:border-praxis-bg-dark-700">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-praxis-bg-light-200 dark:text-praxis-bg-dark-200 flex items-center">
+            <FaWallet className="mr-2 text-praxis-blue-800" /> My Wallet
+          </h2>
+          <span className="text-xl font-bold text-praxis-blue-800">{accountBalance} {currency}</span>
+        </div>
+        <p className="text-sm text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">
+          Your balance is held in PRX, the platform's stable coin.
+        </p>
+      </div>
 
-        {transactionStatus === 'success' && (
-          <p className="text-green-400 mt-4 text-center">Payment successful! (Simulated)</p>
-        )}
+      {/* Transaction History */}
+      <div className="p-6 rounded-lg bg-praxis-bg-light-900 dark:bg-praxis-bg-dark-800 shadow-lg border border-praxis-bg-light-800 dark:border-praxis-bg-dark-700">
+        <h2 className="text-lg font-semibold text-praxis-bg-light-200 dark:text-praxis-bg-dark-200 flex items-center mb-4">
+          <FaHistory className="mr-2 text-praxis-blue-800" /> Transaction History
+        </h2>
+        <ul className="space-y-3">
+          {transactionHistory.map((tx, index) => (
+            <li
+              key={index}
+              className="flex justify-between items-center p-3 rounded-lg bg-praxis-bg-light-800 dark:bg-praxis-bg-dark-900"
+            >
+              <div className="flex-1">
+                <span className={`font-semibold ${tx.type === 'Received' ? 'text-green-500' : 'text-praxis-blue-800'}`}>
+                  {tx.type}
+                </span>
+                <p className="text-sm text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">
+                  {tx.type === 'Received' ? `from ${tx.sender}` : `to ${tx.recipient}`}
+                </p>
+              </div>
+              <div className="text-right">
+                <span className="font-semibold text-praxis-bg-light-200 dark:text-praxis-bg-dark-200">
+                  {tx.type === 'Received' ? '+' : '-'}
+                  {tx.amount} {currency}
+                </span>
+                <p className="text-sm text-praxis-bg-light-500 dark:text-praxis-bg-dark-500">{tx.date}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

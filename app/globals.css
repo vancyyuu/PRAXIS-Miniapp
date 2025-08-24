@@ -8,7 +8,7 @@
   [data-theme="light"] {
     --app-background: #f5f5f5; /* Praxis-BG-light 950 */
     --app-gray: #e7e7e7; /* Praxis-BG-light 900 */
-    --app-foreground: #414141; /* Praxis-BG-light 300 */
+    --app-foreground: #323232; /* Praxis-BG-light 200 */
     --app-accent: #3730a3;
   }
 }
