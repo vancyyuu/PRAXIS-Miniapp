@@ -1,0 +1,22 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root,
+  [data-theme="light"] {
+    --app-background: #f5f5f5; /* Praxis-BG-light 950 */
+    --app-gray: #e7e7e7; /* Praxis-BG-light 900 */
+    --app-foreground: #414141; /* Praxis-BG-light 300 */
+    --app-accent: #3730a3;
+  }
+}
+
+.dark,
+[data-theme="dark"] {
+  --app-background: #171717; /* Praxis-BG-dark 950 */
+  --app-gray: #262626; /* Praxis-BG-dark 900 */
+  --app-foreground: #d0d0d0; /* Praxis-BG-dark 200 */
+  --app-accent: #3730a3;
+}
