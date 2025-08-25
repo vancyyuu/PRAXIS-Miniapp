@@ -13,7 +13,7 @@ const allJobs: Job[] = [
     title: "Web3 Smart Contract Auditor",
     company: "Chainlink",
     description: "Audit and secure smart contracts for various DeFi protocols.",
-    salary: "$150,000 - $200,000",
+    salary: "$150,000 - $200,000 PRX",
     requiredSkills: ["Solidity", "Hardhat", "Truffle", "EVM"],
   },
   {
@@ -47,18 +47,18 @@ const allJobs: Job[] = [
 ];
 
 export default function JobsList({ onJobClick, userSkills }: JobsListProps) {
-  const [qualifiedJobStatus, setQualifiedJobStatus] = useState<'unapplied' | 'accepted'>('unapplied');
-
-  const recommendedJobs = useMemo(() => {
-    return allJobs.filter(job => job.requiredSkills.some(skill => userSkills.includes(skill)));
+  // UseMemo to find the qualified job once.
+  const qualifiedJob = useMemo(() => {
+    return allJobs.find(job =>
+      job.title === "Full-Stack Web3 Developer" &&
+      job.requiredSkills.every(skill => userSkills.includes(skill))
+    );
   }, [userSkills]);
 
-  const qualifiedJob = recommendedJobs.find(job => job.title === "Full-Stack Web3 Developer");
-
-  const handleContractAccept = () => {
-    setQualifiedJobStatus('accepted');
-    alert("Smart contract transaction initiated. You are now officially hired!");
-  };
+  // Filter out the qualified job from the main list.
+  const otherJobs = useMemo(() => {
+    return allJobs.filter(job => job.title !== "Full-Stack Web3 Developer");
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -69,72 +69,45 @@ export default function JobsList({ onJobClick, userSkills }: JobsListProps) {
         </p>
       </div>
 
-      <div className="space-y-4">
-        {recommendedJobs.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-bold text-praxis-blue-800 dark:text-praxis-blue-400 flex items-center gap-2">
-              <FaStar className="text-yellow-500" />
-              Recommended for You
-            </h2>
-            {recommendedJobs.map((job, index) => (
-              <div
-                key={index}
-                className="p-4 rounded-lg shadow-md border border-praxis-bg-light-900 dark:border-praxis-bg-dark-950 hover:shadow-lg transition-shadow duration-200 cursor-pointer bg-praxis-bg-light-950 dark:bg-praxis-bg-dark-900"
-                onClick={() => onJobClick(job)}
-              >
-                <h3 className="text-xl font-semibold text-praxis-bg-light-100 dark:text-praxis-bg-dark-200">{job.title}</h3>
-                <p className="text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">{job.company}</p>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {job.requiredSkills.map((skill, skillIndex) => (
-                    <span
-                      key={skillIndex}
-                      className={`px-2 py-1 rounded-full text-xs font-semibold
-                        ${userSkills.includes(skill)
-                          ? 'bg-praxis-blue-400 text-white'
-                          : 'bg-praxis-bg-light-800 dark:bg-praxis-bg-dark-950 text-praxis-bg-light-400 dark:text-praxis-bg-dark-400'
-                        }`
-                      }
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-                {job.title === "Full-Stack Web3 Developer" && qualifiedJobStatus === 'unapplied' && (
-                  <div className="mt-4 text-center">
-                    <span className="text-praxis-blue-800 dark:text-praxis-blue-400 font-semibold">
-                      You are highly qualified for this role!
-                    </span>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); handleContractAccept(); }}
-                      className="mt-2 py-2 px-6 rounded-lg bg-green-600 text-white font-bold transition-colors duration-200 hover:bg-green-700"
-                    >
-                      Accept Offer
-                    </button>
-                  </div>
-                )}
-                {job.title === "Full-Stack Web3 Developer" && qualifiedJobStatus === 'accepted' && (
-                  <div className="mt-4 text-center">
-                    <span className="text-green-500 font-bold flex items-center justify-center">
-                      <FaCheckCircle className="mr-2" /> Contract Signed
-                    </span>
-                    <button
-                      onClick={(e) => e.stopPropagation()}
-                      className="mt-2 py-2 px-6 rounded-lg bg-praxis-blue-800 text-white font-bold transition-colors duration-200 hover:bg-praxis-blue-700"
-                    >
-                      <FaWallet className="mr-2" /> View Contract
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
+      {qualifiedJob && (
+        <div className="space-y-4">
+          <h2 className="text-lg font-bold text-praxis-blue-800 dark:text-praxis-blue-400 flex items-center gap-2">
+            <FaStar className="text-yellow-500" />
+            Highly Recommended Job
+          </h2>
+          <div
+            className="p-4 rounded-lg shadow-md border border-praxis-bg-light-900 dark:border-praxis-bg-dark-950 hover:shadow-lg transition-shadow duration-200 cursor-pointer bg-praxis-bg-light-950 dark:bg-praxis-bg-dark-900"
+            onClick={() => onJobClick(qualifiedJob)}
+          >
+            <h3 className="text-xl font-semibold text-praxis-bg-light-100 dark:text-praxis-bg-dark-200">{qualifiedJob.title}</h3>
+            <p className="text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">{qualifiedJob.company}</p>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {qualifiedJob.requiredSkills.map((skill, skillIndex) => (
+                <span
+                  key={skillIndex}
+                  className={`px-2 py-1 rounded-full text-xs font-semibold
+                    ${userSkills.includes(skill)
+                      ? 'bg-praxis-blue-400 text-white'
+                      : 'bg-praxis-bg-light-800 dark:bg-praxis-bg-dark-950 text-praxis-bg-light-400 dark:text-praxis-bg-dark-400'
+                    }`}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+            <div className="mt-4 text-center text-praxis-blue-800 dark:text-praxis-blue-400 font-semibold">
+              You are highly qualified for this role! Click to view details.
+            </div>
           </div>
-        )}
+        </div>
+      )}
 
-        <h2 className="text-lg font-bold text-praxis-blue-800 dark:text-praxis-blue-400 flex items-center gap-2">
-          <FaBriefcase className="text-praxis-blue-800 dark:text-praxis-blue-400" />
-          All Jobs
-        </h2>
-        {allJobs.map((job, index) => (
+      <h2 className="text-lg font-bold text-praxis-blue-800 dark:text-praxis-blue-400 flex items-center gap-2">
+        <FaBriefcase className="text-praxis-blue-800 dark:text-praxis-blue-400" />
+        All Jobs
+      </h2>
+      <div className="space-y-4">
+        {otherJobs.map((job, index) => (
           <div
             key={index}
             className="p-4 rounded-lg shadow-md border border-praxis-bg-light-900 dark:border-praxis-bg-dark-950 hover:shadow-lg transition-shadow duration-200 cursor-pointer bg-praxis-bg-light-950 dark:bg-praxis-bg-dark-900"

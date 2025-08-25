@@ -3,8 +3,19 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useMiniKit, useAddFrame, useOpenUrl, MiniKitProvider } from "@coinbase/onchainkit/minikit";
-import { Name, Identity, Address, Avatar, EthBalance } from "@coinbase/onchainkit/identity";
-import { ConnectWallet, Wallet, WalletDropdown, WalletDropdownDisconnect } from "@coinbase/onchainkit/wallet";
+import {
+  Name,
+  Identity,
+  Address,
+  Avatar,
+  EthBalance,
+} from "@coinbase/onchainkit/identity";
+import {
+  ConnectWallet,
+  Wallet,
+  WalletDropdown,
+  WalletDropdownDisconnect,
+} from "@coinbase/onchainkit/wallet";
 import { FaBars } from 'react-icons/fa';
 import { baseSepolia } from "viem/chains";
 
@@ -195,15 +206,19 @@ Requirements:
   </button>
   <div className="flex items-center space-x-2">
     <Wallet className="z-10">
-      <ConnectWallet className="px-4 py-2 rounded-full bg-praxis-blue-800 text-white hover:bg-praxis-blue-700 transition-colors">
-        <Name className="text-white" />
-      </ConnectWallet>
-      <WalletDropdown className="shadow-lg p-2 rounded-lg bg-praxis-bg-light-950 dark:bg-praxis-bg-dark-900 border border-praxis-bg-light-900 dark:border-praxis-bg-dark-950 text-praxis-bg-light-100 dark:text-praxis-bg-dark-200 w-full max-w-xs">
-        <WalletDropdownDisconnect
-          className="py-2 px-4 text-praxis-bg-light-400 dark:text-praxis-bg-dark-400 hover:text-praxis-blue-800 dark:hover:text-praxis-blue-400 transition-colors block w-full text-left rounded hover:bg-praxis-bg-light-800 dark:hover:bg-praxis-bg-dark-800"
-        />
-      </WalletDropdown>
-    </Wallet>
+                <ConnectWallet>
+                  <Name className="text-inherit" />
+                </ConnectWallet>
+                <WalletDropdown>
+                  <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
+                    <Avatar />
+                    <Name />
+                    <Address />
+                    <EthBalance />
+                  </Identity>
+                  <WalletDropdownDisconnect />
+                </WalletDropdown>
+              </Wallet>
     <ThemeToggle />
     <div>{saveFrameButton}</div>
   </div>
