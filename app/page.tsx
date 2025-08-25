@@ -25,28 +25,8 @@ import JobTracker from './components/JobTracker';
 // Hooks
 import useTheme from './hooks/useTheme';
 
-export type ActiveTabType = 'home' | 'my-profile' | 'search' | 'jobs' | 'profile' | 'assessment' | 'assessment-problem' | 'job-details' | 'tracker' | 'wallet';
-
-interface Badge {
-    name: string;
-    imageUrl: string;
-}
-
-interface ProfileData {
-    name: string;
-    title: string;
-    avatarUrl: string;
-    badges: Badge[];
-    fullProfileUrl: string;
-}
-
-interface Job {
-  title: string;
-  company: string;
-  description: string;
-  salary: string;
-  requiredSkills: string[];
-}
+// Centralized Types
+import { ActiveTabType, ProfileData, Job } from '@/types';
 
 export default function App() {
   return (
@@ -116,14 +96,14 @@ function MainAppContent() {
       name: "Alex Johnson",
       title: "Full-Stack Developer",
       avatarUrl: "https://via.placeholder.com/100/3730a3/e0e7ff",
-      badges: [{ name: "Web Development", imageUrl: "/web-dev-badge.png" }, { name: "UX/UI Design", imageUrl: "/ui-ux-badge.png" }],
+      badges: [{ name: "Web Development", imageUrl: "https://via.placeholder.com/30/f1c40f/000000?text=WD" }, { name: "UX/UI Design", imageUrl: "https://via.placeholder.com/30/2ecc71/ffffff?text=UI" }],
       fullProfileUrl: "https://www.your-praxis-site.com/profile/alexjohnson"
     },
     {
       name: "Sophia Chen",
       title: "Digital Marketer",
       avatarUrl: "https://via.placeholder.com/100/171717/d0d0d0",
-      badges: [{ name: "SEO Certification", imageUrl: "/seo-badge.png" }, { name: "Social Media Strategy", imageUrl: "/social-media-badge.png" }],
+      badges: [{ name: "SEO Certification", imageUrl: "https://via.placeholder.com/30/3498db/ffffff?text=SEO" }, { name: "Social Media Strategy", imageUrl: "https://via.placeholder.com/30/9b59b6/ffffff?text=SM" }],
       fullProfileUrl: "https://www.your-praxis-site.com/profile/sophiachen"
     },
   ]), []);
@@ -135,10 +115,10 @@ function MainAppContent() {
 A decentralized application (DApp) needs a simple smart contract to manage a list of registered users. The contract should allow users to register their wallet address and store a username.
 
 Requirements:
-1.  Create a Solidity smart contract named 'UserRegistry'.
-2.  The contract should have a public mapping to store usernames, mapping from an address to a string.
-3.  Implement a function 'registerUser' that takes a string '_username' and stores it, associating it with the sender's address (msg.sender).
-4.  Implement a public view function 'getUsername' that takes an address and returns the associated username.`,
+1.  Create a Solidity smart contract named 'UserRegistry'.
+2.  The contract should have a public mapping to store usernames, mapping from an address to a string.
+3.  Implement a function 'registerUser' that takes a string '_username' and stores it, associating it with the sender's address (msg.sender).
+4.  Implement a public view function 'getUsername' that takes an address and returns the associated username.`,
     },
     webdev: {
       title: 'Web Development Assessment',
@@ -146,11 +126,11 @@ Requirements:
 A web page for a new crypto project needs a dynamic user interface component.
 
 Requirements:
-1.  Create a React component named 'CryptoTicker'.
-2.  This component should display a mock cryptocurrency price.
-3.  The price should update every 3 seconds with a new random value to simulate a real-time feed.
-4.  The component should display the price with a dollar sign and two decimal places (e.g., $42,500.25).
-5.  Use a simple state hook to manage the price.`,
+1.  Create a React component named 'CryptoTicker'.
+2.  This component should display a mock cryptocurrency price.
+3.  The price should update every 3 seconds with a new random value to simulate a real-time feed.
+4.  The component should display the price with a dollar sign and two decimal places (e.g., $42,500.25).
+5.  Use a simple state hook to manage the price.`,
     },
   }), []);
 
@@ -204,32 +184,33 @@ Requirements:
       
       <div className="w-full max-w-md mx-auto py-3">
         <header className="flex justify-between items-center mb-3 h-11 px-4">
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            style={{ color: "var(--praxis-text)" }}
-            className="text-2xl"
-          >
-            <FaBars />
-          </button>
-          <div className="flex items-center space-x-2">
-            <Wallet className="z-10">
-              <ConnectWallet>
-                <Name className="text-inherit" />
-              </ConnectWallet>
-              <WalletDropdown>
-                <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
-                  <Avatar />
-                  <Name />
-                  <Address />
-                  <EthBalance />
-                </Identity>
-                <WalletDropdownDisconnect />
-              </WalletDropdown>
-            </Wallet>
-            <ThemeToggle />
-            <div>{saveFrameButton}</div>
-          </div>
-        </header>
+  <button
+    onClick={() => setIsSidebarOpen(true)}
+    style={{ color: "var(--praxis-text)" }}
+    className="text-2xl"
+  >
+    <FaBars />
+  </button>
+  <div className="flex items-center space-x-2">
+    <Wallet className="z-10">
+      {/* Updated styling for the Connect Wallet button */}
+      <ConnectWallet className="px-4 py-2 rounded-full bg-praxis-blue-800 text-white hover:bg-praxis-blue-700 transition-colors">
+        <Name className="text-white" />
+      </ConnectWallet>
+      <WalletDropdown>
+        <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
+          <Avatar />
+          <Name />
+          <Address />
+          <EthBalance />
+        </Identity>
+        <WalletDropdownDisconnect />
+      </WalletDropdown>
+    </Wallet>
+    <ThemeToggle />
+    <div>{saveFrameButton}</div>
+  </div>
+</header>
         
         <main className="flex-1 px-4">
           {activeTab === 'home' && <Home />}

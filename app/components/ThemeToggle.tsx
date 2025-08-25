@@ -8,7 +8,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full text-praxis-blue-800 dark:text-praxis-blue-400 bg-praxis-bg-light-200 dark:bg-praxis-bg-dark-700 transition-colors duration-200"
+      className="p-2 rounded-full text-praxis-blue-800 dark:text-praxis-blue-400 bg-praxis-bg-light-900 dark:bg-praxis-bg-dark-700 transition-colors duration-200"
       aria-label="Toggle dark mode"
     >
       {isDarkMode ? <FaSun /> : <FaMoon />}

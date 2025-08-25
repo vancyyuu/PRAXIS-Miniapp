@@ -8,6 +8,16 @@ export interface ProfileData {
   name: string;
   title: string;
   avatarUrl: string;
-  badges: Badge[]; // Now uses the centralized Badge interface
+  badges: Badge[];
   fullProfileUrl: string;
 }
+
+export interface Job {
+  title: string;
+  company: string;
+  description: string;
+  salary: string;
+  requiredSkills: string[];
+}
+
+export type ActiveTabType = 'home' | 'my-profile' | 'search' | 'jobs' | 'profile' | 'assessment' | 'assessment-problem' | 'job-details' | 'tracker' | 'wallet';

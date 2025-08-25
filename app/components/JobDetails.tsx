@@ -1,15 +1,8 @@
 // components/JobDetails.tsx
-import { FaArrowLeft, FaBriefcase, FaMoneyBill, FaCodeBranch, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
-import { useMemo } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
+import { Job } from '@/types'; // Import the Job interface
 
-interface Job {
-  title: string;
-  company: string;
-  description: string;
-  salary: string;
-  requiredSkills: string[];
-}
-
+// Correct Props Interface
 interface JobDetailsProps {
   job: Job;
   onBack: () => void;
@@ -17,43 +10,41 @@ interface JobDetailsProps {
 }
 
 export default function JobDetails({ job, onBack, userSkills }: JobDetailsProps) {
-  const hasAllSkills = useMemo(() => 
-    job.requiredSkills.every(skill => userSkills.includes(skill))
-  , [job.requiredSkills, userSkills]);
-
   return (
-    <div className="relative space-y-4">
-      <button onClick={onBack} className="flex items-center space-x-2 text-praxis-bg-light-400 dark:text-praxis-bg-dark-400 hover:text-praxis-bg-light-200 dark:hover:text-praxis-bg-dark-200 transition-colors">
-        <FaArrowLeft />
-        <span>Back to Jobs</span>
-      </button>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center p-4 rounded-lg shadow-inner bg-praxis-bg-light-950 border border-praxis-bg-light-900 dark:bg-praxis-bg-dark-900 dark:border-praxis-bg-dark-950">
+        <button onClick={onBack} className="text-praxis-blue-800 dark:text-praxis-blue-400">
+          <FaArrowLeft className="text-2xl" />
+        </button>
+        <h1 className="text-2xl font-bold text-praxis-blue-800 dark:text-praxis-blue-400">Job Details</h1>
+        <div className="w-6"></div> {/* Spacer for alignment */}
+      </div>
 
-      <div className="p-6 rounded-lg shadow-lg border border-praxis-bg-light-800 dark:border-praxis-bg-dark-700 bg-praxis-bg-light-900 dark:bg-praxis-bg-dark-800">
-        <h1 className="text-2xl font-bold text-praxis-blue-800 dark:text-praxis-blue-400 mb-2">{job.title}</h1>
-        <p className="text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">{job.company}</p>
+      <div className="p-6 rounded-lg shadow-lg bg-praxis-bg-light-950 border border-praxis-bg-light-900 dark:bg-praxis-bg-dark-900 dark:border-praxis-bg-dark-950">
+        <h2 className="text-xl font-bold text-praxis-bg-light-100 dark:text-praxis-bg-dark-200">{job.title}</h2>
+        <p className="text-praxis-bg-light-400 dark:text-praxis-bg-dark-400 mb-4">{job.company}</p>
 
-        <div className="flex items-center space-x-2 my-4">
-          <FaMoneyBill className="text-green-500" />
-          <span className="font-semibold text-praxis-bg-light-200 dark:text-praxis-bg-dark-200">{job.salary}</span>
-        </div>
+        <h3 className="text-lg font-semibold text-praxis-bg-light-100 dark:text-praxis-bg-dark-200 mt-4">Description</h3>
+        <p className="text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">{job.description}</p>
 
-        <h3 className="text-lg font-semibold text-praxis-blue-800 dark:text-praxis-blue-400 mb-2">Description</h3>
-        <p className="text-praxis-bg-light-400 dark:text-praxis-bg-dark-400 mb-4">{job.description}</p>
+        <h3 className="text-lg font-semibold text-praxis-bg-light-100 dark:text-praxis-bg-dark-200 mt-4">Salary</h3>
+        <p className="text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">{job.salary}</p>
 
-        <h3 className="text-lg font-semibold text-praxis-blue-800 dark:text-praxis-blue-400 mb-2">Required Skills</h3>
-        <ul className="list-none space-y-2 mb-4">
+        <h3 className="text-lg font-semibold text-praxis-bg-light-100 dark:text-praxis-bg-dark-200 mt-4">Required Skills</h3>
+        <div className="flex flex-wrap gap-2 mt-2">
           {job.requiredSkills.map((skill, index) => (
-            <li key={index} className="flex items-center space-x-2 text-praxis-bg-light-200 dark:text-praxis-bg-dark-200">
-              {userSkills.includes(skill) ? <FaCheckCircle className="text-green-500" /> : <FaTimesCircle className="text-red-500" />}
-              <span>{skill}</span>
-            </li>
+            <span
+              key={index}
+              className={`px-2 py-1 rounded-full text-xs font-semibold
+                ${userSkills.includes(skill)
+                  ? 'bg-praxis-blue-400 text-white'
+                  : 'bg-praxis-bg-light-800 dark:bg-praxis-bg-dark-950 text-praxis-bg-light-400 dark:text-praxis-bg-dark-400'
+                }`
+              }
+            >
+              {skill}
+            </span>
           ))}
-        </ul>
-
-        <div className="p-4 rounded-lg bg-praxis-bg-light-800 dark:bg-praxis-bg-dark-900 text-center">
-          <button className={`w-full py-2 rounded-md font-semibold transition-colors duration-200 ${hasAllSkills ? 'bg-praxis-blue-800 dark:bg-praxis-blue-400 text-white' : 'bg-praxis-bg-light-500 dark:bg-praxis-bg-dark-500 text-praxis-bg-light-800 dark:text-praxis-bg-dark-800 cursor-not-allowed'}`}>
-            {hasAllSkills ? "Apply Now" : "Missing required skills"}
-          </button>
         </div>
       </div>
     </div>
