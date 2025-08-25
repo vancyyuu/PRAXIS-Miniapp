@@ -1,40 +1,67 @@
 // components/Leaderboard.tsx
-import { FaUserCircle, FaStar } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
+import Image from 'next/image'; // Import the Image component
 import { ProfileData, Badge } from '@/types';
 
 const topPraxers: (ProfileData & { rank: number })[] = [
   { 
-    name: "Charlie Green", 
-    title: "Solidity Developer", 
+    name: "Lance Joseph De Vera", 
+    title: "Back-End Developer, Cybersecurity Specialist", 
     badges: [
-      { name: "Solidity", imageUrl: "https://via.placeholder.com/30/ff5733/ffffff?text=S" }, 
-      { name: "Web3", imageUrl: "https://via.placeholder.com/30/3498db/ffffff?text=W3" }
+      { name: "Node.js", imageUrl: "https://via.placeholder.com/30/ff5733/ffffff?text=S" }, 
+      { name: "Linux", imageUrl: "https://via.placeholder.com/30/3498db/ffffff?text=W3" }
     ], 
     rank: 1, 
-    avatarUrl: "https://via.placeholder.com/100/3730a3/e0e7ff",
-    fullProfileUrl: "https://www.your-praxis-site.com/profile/charliegreen"
+    avatarUrl: "/images/lance.png",
+    fullProfileUrl: "https://www.your-praxis-site.com/profile/ljdevera"
   },
   { 
-    name: "Dana White", 
-    title: "Rust Engineer", 
+    name: "Cyrah Manongdo", 
+    title: "Back-End Developer, Cybersecurity Specialist", 
     badges: [
-      { name: "Rust", imageUrl: "https://via.placeholder.com/30/e67e22/ffffff?text=R" }, 
-      { name: "Backend", imageUrl: "https://via.placeholder.com/30/2ecc71/ffffff?text=B" }
+      { name: "Node.js", imageUrl: "https://via.placeholder.com/30/e67e22/ffffff?text=R" }, 
+      { name: "Linux", imageUrl: "https://via.placeholder.com/30/2ecc71/ffffff?text=B" }
     ], 
     rank: 2, 
-    avatarUrl: "https://via.placeholder.com/100/171717/d0d0d0",
-    fullProfileUrl: "https://www.your-praxis-site.com/profile/danawhite"
+    // FIX: Removed the incorrect '/public' from the path
+    avatarUrl: "/images/cyy.png",
+    fullProfileUrl: "https://www.your-praxis-site.com/profile/cyrahmanongdo"
   },
   { 
-    name: "Frank Black", 
-    title: "Full-Stack Dev", 
+    name: "Gwyneth Zoe Basto", 
+    title: "Graphics Designer, Front-End Developer", 
     badges: [
-      { name: "JavaScript", imageUrl: "https://via.placeholder.com/30/f1c40f/000000?text=JS" }, 
-      { name: "Node.js", imageUrl: "https://via.placeholder.com/30/2c3e50/ffffff?text=NJS" }
+      { name: "Canva", imageUrl: "https://via.placeholder.com/30/f1c40f/000000?text=JS" }, 
+      { name: "CSS/Tailwind", imageUrl: "https://via.placeholder.com/30/2c3e50/ffffff?text=NJS" }
     ], 
     rank: 3, 
-    avatarUrl: "https://via.placeholder.com/100/a5b4fc/312e81",
-    fullProfileUrl: "https://www.your-praxis-site.com/profile/frankblack"
+    // FIX: Removed the incorrect '/public' from the path
+    avatarUrl: "/images/zoe.png",
+    fullProfileUrl: "https://www.your-praxis-site.com/profile/matttrinidad"
+  },
+  { 
+    name: "Matt Jethro Trinidad", 
+    title: "Front-End Developer", 
+    badges: [
+      { name: "ReactJS", imageUrl: "https://via.placeholder.com/30/f1c40f/000000?text=JS" }, 
+      { name: "CSS/Tailwind", imageUrl: "https://via.placeholder.com/30/2c3e50/ffffff?text=NJS" }
+    ], 
+    rank: 4, 
+    // FIX: Removed the incorrect '/public' from the path
+    avatarUrl: "/images/matt.png",
+    fullProfileUrl: "https://www.your-praxis-site.com/profile/matttrinidad"
+  },
+  { 
+    name: "Juric Renz-Idly Macaranas", 
+    title: "Front-End Developer", 
+    badges: [
+      { name: "ReactJS", imageUrl: "https://via.placeholder.com/30/f1c40f/000000?text=JS" }, 
+      { name: "Next.js", imageUrl: "https://via.placeholder.com/30/2c3e50/ffffff?text=NJS" }
+    ], 
+    rank: 5, 
+    // FIX: Removed the incorrect '/public' from the path
+    avatarUrl: "/images/juric.png",
+    fullProfileUrl: "https://www.your-praxis-site.com/profile/matttrinidad"
   },
 ];
 
@@ -53,7 +80,16 @@ export default function Leaderboard({ onProfileClick }: LeaderboardProps) {
             className="flex items-center space-x-4 p-3 rounded-lg bg-praxis-bg-light-800 dark:bg-praxis-bg-dark-900 shadow"
           >
             <span className="font-bold text-praxis-blue-800 dark:text-praxis-blue-400 w-6 flex-shrink-0">{praxer.rank}.</span>
-            <FaUserCircle className="text-4xl text-praxis-bg-light-400 dark:text-praxis-bg-dark-400 flex-shrink-0" />
+            
+            {/* FIX: Use the next/image component to display the avatar */}
+            <Image
+              src={praxer.avatarUrl}
+              alt={`${praxer.name}'s avatar`}
+              width={40} 
+              height={40}
+              className="rounded-full flex-shrink-0"
+            />
+            
             <div className="flex-1">
               <span className="text-lg font-semibold text-praxis-bg-light-200 dark:text-praxis-bg-dark-200">{praxer.name}</span>
               <p className="text-sm text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">{praxer.title}</p>

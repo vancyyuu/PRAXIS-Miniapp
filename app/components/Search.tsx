@@ -1,7 +1,8 @@
 // components/Search.tsx
 import { useState } from 'react';
+import Image from 'next/image'; // ADDED: Import the Image component
 import Leaderboard from './Leaderboard';
-import { FaUserCircle, FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle } from 'react-icons/fa'; // REMOVED: FaUserCircle
 import { ProfileData } from '@/types';
 
 interface SearchProps {
@@ -54,7 +55,14 @@ export default function Search({ onSearch, onProfileClick, searchResults }: Sear
                 onClick={() => onProfileClick(profile)}
                 className="flex items-center space-x-4 p-3 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-[1.02] bg-praxis-bg-light-800 dark:bg-praxis-bg-dark-900 shadow"
               >
-                <FaUserCircle className="text-4xl text-praxis-blue-800 dark:text-praxis-blue-400" />
+                {/* MODIFIED: Replaced FaUserCircle with Image component */}
+                <Image
+                  src={profile.avatarUrl}
+                  alt={`${profile.name}'s avatar`}
+                  width={40}
+                  height={40}
+                  className="rounded-full object-cover flex-shrink-0"
+                />
                 <div className="flex-1">
                   <span className="text-lg font-semibold text-praxis-bg-light-200 dark:text-praxis-bg-dark-200">{profile.name}</span>
                   <p className="text-sm text-praxis-bg-light-400 dark:text-praxis-bg-dark-400">{profile.title}</p>

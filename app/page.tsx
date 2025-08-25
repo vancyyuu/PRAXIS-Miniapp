@@ -48,14 +48,14 @@ function MainAppContent() {
   const [selectedProblemType, setSelectedProblemType] = useState<'onchain' | 'webdev' | null>(null);
 
   const myProfileData = {
-    name: "John Doe",
-    title: "On-Chain Enthusiast",
-    avatarUrl: "https://via.placeholder.com/100/3730a3/e0e7ff",
+    name: "You",
+    title: "Web Developer & On-Chain Enthusiast",
+    avatarUrl: "/images/person.png",
     badges: [
-      { name: "Web Development", imageUrl: "/web-dev-badge.png" },
-      { name: "UI/UX Design", imageUrl: "/ui-ux-badge.png" },
-      { name: "Figma", imageUrl: "/figma-badge.png" },
-      { name: "Node.js", imageUrl: "/nodejs-badge.png" },
+      { name: "Web Development", imageUrl: "/images/badge.jpg" },
+      { name: "UI/UX Design", imageUrl: "/images/badge.jpg" },
+      { name: "Figma", imageUrl: "/images/badge.jpg" },
+      { name: "Node.js", imageUrl: "/images/badge.jpg" },
     ]
   };
 
@@ -93,18 +93,18 @@ function MainAppContent() {
   
   const allProfiles: ProfileData[] = useMemo(() => ([
     {
-      name: "Alex Johnson",
-      title: "Full-Stack Developer",
-      avatarUrl: "https://via.placeholder.com/100/3730a3/e0e7ff",
-      badges: [{ name: "Web Development", imageUrl: "https://via.placeholder.com/30/f1c40f/000000?text=WD" }, { name: "UX/UI Design", imageUrl: "https://via.placeholder.com/30/2ecc71/ffffff?text=UI" }],
-      fullProfileUrl: "https://www.your-praxis-site.com/profile/alexjohnson"
+      name: "Jane Doe",
+      title: "Digital Marketer",
+      avatarUrl: "/images/woman.jpg",
+      badges: [{ name: "SEO Certification", imageUrl: "https://via.placeholder.com/30/3498db/ffffff?text=SEO" }, { name: "Social Media Strategy", imageUrl: "https://via.placeholder.com/30/9b59b6/ffffff?text=SM" }],
+      fullProfileUrl: "https://www.your-praxis-site.com/profile/janedoe"
     },
     {
-      name: "Sophia Chen",
-      title: "Digital Marketer",
-      avatarUrl: "https://via.placeholder.com/100/171717/d0d0d0",
-      badges: [{ name: "SEO Certification", imageUrl: "https://via.placeholder.com/30/3498db/ffffff?text=SEO" }, { name: "Social Media Strategy", imageUrl: "https://via.placeholder.com/30/9b59b6/ffffff?text=SM" }],
-      fullProfileUrl: "https://www.your-praxis-site.com/profile/sophiachen"
+      name: "Alex Green",
+      title: "Full-Stack Developer",
+      avatarUrl: "/images/man.jpg",
+      badges: [{ name: "Web Development", imageUrl: "https://via.placeholder.com/30/f1c40f/000000?text=WD" }, { name: "UX/UI Design", imageUrl: "https://via.placeholder.com/30/2ecc71/ffffff?text=UI" }],
+      fullProfileUrl: "https://www.your-praxis-site.com/profile/alexgreen"
     },
   ]), []);
   
@@ -115,10 +115,10 @@ function MainAppContent() {
 A decentralized application (DApp) needs a simple smart contract to manage a list of registered users. The contract should allow users to register their wallet address and store a username.
 
 Requirements:
-1.  Create a Solidity smart contract named 'UserRegistry'.
-2.  The contract should have a public mapping to store usernames, mapping from an address to a string.
-3.  Implement a function 'registerUser' that takes a string '_username' and stores it, associating it with the sender's address (msg.sender).
-4.  Implement a public view function 'getUsername' that takes an address and returns the associated username.`,
+1.  Create a Solidity smart contract named 'UserRegistry'.
+2.  The contract should have a public mapping to store usernames, mapping from an address to a string.
+3.  Implement a function 'registerUser' that takes a string '_username' and stores it, associating it with the sender's address (msg.sender).
+4.  Implement a public view function 'getUsername' that takes an address and returns the associated username.`,
     },
     webdev: {
       title: 'Web Development Assessment',
@@ -126,11 +126,11 @@ Requirements:
 A web page for a new crypto project needs a dynamic user interface component.
 
 Requirements:
-1.  Create a React component named 'CryptoTicker'.
-2.  This component should display a mock cryptocurrency price.
-3.  The price should update every 3 seconds with a new random value to simulate a real-time feed.
-4.  The component should display the price with a dollar sign and two decimal places (e.g., $42,500.25).
-5.  Use a simple state hook to manage the price.`,
+1.  Create a React component named 'CryptoTicker'.
+2.  This component should display a mock cryptocurrency price.
+3.  The price should update every 3 seconds with a new random value to simulate a real-time feed.
+4.  The component should display the price with a dollar sign and two decimal places (e.g., $42,500.25).
+5.  Use a simple state hook to manage the price.`,
     },
   }), []);
 
@@ -174,7 +174,8 @@ Requirements:
 
 
   return (
-    <div className={`flex flex-col min-h-screen font-sans`} style={{ backgroundColor: "var(--praxis-bg)", color: "var(--praxis-text)" }}>
+    // FIX: Changed flex-col to flex to enable a horizontal layout
+    <div className={`flex min-h-screen font-sans`} style={{ backgroundColor: "var(--praxis-bg)", color: "var(--praxis-text)" }}>
       <Sidebar 
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -182,7 +183,8 @@ Requirements:
         setIsSidebarOpen={setIsSidebarOpen}
       />
       
-      <div className="w-full max-w-md mx-auto py-3">
+      {/* ADDED flex-1 to make the content div expand to the right */}
+      <div className="flex-1 w-full max-w-md mx-auto py-3">
         <header className="flex justify-between items-center mb-3 h-11 px-4">
   <button
     onClick={() => setIsSidebarOpen(true)}
@@ -193,18 +195,13 @@ Requirements:
   </button>
   <div className="flex items-center space-x-2">
     <Wallet className="z-10">
-      {/* Updated styling for the Connect Wallet button */}
       <ConnectWallet className="px-4 py-2 rounded-full bg-praxis-blue-800 text-white hover:bg-praxis-blue-700 transition-colors">
         <Name className="text-white" />
       </ConnectWallet>
-      <WalletDropdown>
-        <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
-          <Avatar />
-          <Name />
-          <Address />
-          <EthBalance />
-        </Identity>
-        <WalletDropdownDisconnect />
+      <WalletDropdown className="shadow-lg p-2 rounded-lg bg-praxis-bg-light-950 dark:bg-praxis-bg-dark-900 border border-praxis-bg-light-900 dark:border-praxis-bg-dark-950 text-praxis-bg-light-100 dark:text-praxis-bg-dark-200 w-full max-w-xs">
+        <WalletDropdownDisconnect
+          className="py-2 px-4 text-praxis-bg-light-400 dark:text-praxis-bg-dark-400 hover:text-praxis-blue-800 dark:hover:text-praxis-blue-400 transition-colors block w-full text-left rounded hover:bg-praxis-bg-light-800 dark:hover:bg-praxis-bg-dark-800"
+        />
       </WalletDropdown>
     </Wallet>
     <ThemeToggle />
